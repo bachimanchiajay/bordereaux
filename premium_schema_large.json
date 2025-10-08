@@ -1,0 +1,707 @@
+{
+  "policy_source": {
+    "aliases": [
+      "Policy Source",
+      "Source",
+      "UW System Name",
+      "Underwriting System",
+      "System Source",
+      "Origen Póliza",
+      "Fuente de Póliza",
+      "Origem da Apólice",
+      "Sorgente Polizza",
+      "Quelle Policen",
+      "Système de souscription"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "source",
+      "system",
+      "uw"
+    ]
+  },
+  "reporting_period": {
+    "aliases": [
+      "Reporting period",
+      "Reporting Period",
+      "Period of Reporting",
+      "Periodo de Reporte",
+      "Periodo de informe",
+      "Période de reporting",
+      "Berichtszeitraum",
+      "Periodo di rendicontazione"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "period",
+      "report"
+    ]
+  },
+  "master_policy_reference": {
+    "aliases": [
+      "Master Policy Reference",
+      "MASTER Policy Reference",
+      "Master Ref",
+      "Master Policy Ref",
+      "Referencia Póliza Maestra",
+      "Referência Apólice Mestre",
+      "Riferimento Polizza Master",
+      "Référence police maître",
+      "Master-Policenreferenz"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "master",
+      "reference",
+      "ref"
+    ]
+  },
+  "master_policy_inception": {
+    "aliases": [
+      "MASTER Policy Inception",
+      "Master Policy Inception",
+      "Master Inception Date",
+      "Inicio Póliza Maestra",
+      "Início da Apólice Mestre",
+      "Decorrenza Polizza Master",
+      "Date d'effet police maître",
+      "Beginn Masterpolice"
+    ],
+    "expected_type": "date",
+    "hints": [
+      "inception",
+      "start",
+      "inicio",
+      "effet",
+      "beginn"
+    ]
+  },
+  "master_policy_expiration": {
+    "aliases": [
+      "MASTER Policy Expiry",
+      "Master Policy Expiry",
+      "Master Policy Expiration",
+      "Master Expiry Date",
+      "Vencimiento Póliza Maestra",
+      "Expiração Apólice Mestre",
+      "Scadenza Polizza Master",
+      "Date d'expiration police maître",
+      "Ablauf Masterpolice"
+    ],
+    "expected_type": "date",
+    "hints": [
+      "expiry",
+      "expiration",
+      "venc",
+      "scadenza",
+      "expiration"
+    ]
+  },
+  "policy_number": {
+    "aliases": [
+      "Policy Number",
+      "Policy No",
+      "Policy #",
+      "Pol No.",
+      "Pol#",
+      "Local Policy Number",
+      "N° DE POL",
+      "Número de póliza",
+      "Numero de póliza",
+      "Número póliza",
+      "No. de Póliza",
+      "Versicherungsnummer",
+      "Policen-Nr.",
+      "Numéro de police",
+      "Numéro police",
+      "Numero polizza",
+      "Nº Apólice",
+      "Número da Apólice"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "policy",
+      "pol",
+      "numero",
+      "numéro",
+      "nummer",
+      "apólice",
+      "polizza"
+    ]
+  },
+  "assured_legal_name": {
+    "aliases": [
+      "Assured Legal Name",
+      "Assured Name",
+      "Insured Name",
+      "Local Insured Name",
+      "Asegurado",
+      "Nombre del Asegurado",
+      "Nome Segurado",
+      "Nome Assicurato",
+      "Versicherungsnehmer",
+      "Nom de l'assuré"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "assured",
+      "insured",
+      "asegurado",
+      "assicurato",
+      "versicher"
+    ]
+  },
+  "issuing_branch": {
+    "aliases": [
+      "Issuing Branch",
+      "Producing Branch",
+      "Producing Branch/entity",
+      "Branch",
+      "Sucursal",
+      "Filiale",
+      "Branche émettrice",
+      "Niederlassung",
+      "Agencia",
+      "Unidade emissora"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "branch",
+      "sucursal",
+      "filiale",
+      "niederlass"
+    ]
+  },
+  "line_of_business": {
+    "aliases": [
+      "Line of Business",
+      "LOB",
+      "Policy LOB",
+      "Business Line",
+      "Ramo",
+      "Ramo de Negocio",
+      "Ramo de negócio",
+      "Classe d'activité",
+      "Geschäftsbereich",
+      "Linea di business"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "lob",
+      "line of business",
+      "ramo",
+      "geschäftsbereich"
+    ]
+  },
+  "sub_class": {
+    "aliases": [
+      "Sub Class",
+      "Subclass",
+      "SubClass",
+      "Sub Class (Primary Casualty)",
+      "Subclase",
+      "Sous-classe",
+      "Unterklasse",
+      "Sottoclasse"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "sub",
+      "class",
+      "sous",
+      "unter",
+      "sotto"
+    ]
+  },
+  "type_of_inward_risk_policy": {
+    "aliases": [
+      "Type of Inward risk Policy",
+      "Type of inward risk policy",
+      "Type of Inward risk",
+      "Inward Type",
+      "Tipo de riesgo de entrada",
+      "Tipo de risco de entrada",
+      "Tipo rischio inward",
+      "Type de risque entrant",
+      "Art des eingehenden Risikos",
+      "Facultative",
+      "Open Cover",
+      "Binder"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "inward",
+      "facultative",
+      "binder",
+      "open cover",
+      "risco",
+      "riesgo"
+    ]
+  },
+  "insured_country": {
+    "aliases": [
+      "Country",
+      "Risk Country",
+      "Risk Location Country",
+      "Country of Risk",
+      "País",
+      "País de Riesgo",
+      "País de risco",
+      "Paese del rischio",
+      "Pays du risque",
+      "Risikoland"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "country",
+      "pais",
+      "paese",
+      "pays",
+      "land",
+      "risk"
+    ]
+  },
+  "coverage_of_risk": {
+    "aliases": [
+      "Coverage of Risk",
+      "Coverage",
+      "Scope of Cover",
+      "Cobertura",
+      "Cobertura del riesgo",
+      "Couverture du risque",
+      "Deckungsumfang",
+      "Copertura del rischio"
+    ],
+    "expected_type": "text",
+    "hints": [
+      "coverage",
+      "cobertura",
+      "couverture",
+      "deckung",
+      "copertura"
+    ]
+  },
+  "cover_inception_date": {
+    "aliases": [
+      "Effective Date",
+      "Cover Inception Date",
+      "Inception Date",
+      "Start Date",
+      "Start of Cover",
+      "VIG DESDE",
+      "Fecha de vigencia",
+      "Inicio de vigencia",
+      "Data di effetto",
+      "Data inizio",
+      "Date d'effet",
+      "Date de prise d'effet",
+      "Wirksamkeitsdatum",
+      "Início de vigência"
+    ],
+    "expected_type": "date",
+    "hints": [
+      "effective",
+      "inception",
+      "vigencia",
+      "effet",
+      "wirksam",
+      "início"
+    ]
+  },
+  "cover_expiration_date": {
+    "aliases": [
+      "Expiry Date",
+      "Cover Expiration Date",
+      "Expiration Date",
+      "End Date",
+      "End of Cover",
+      "VIG HASTA",
+      "Fecha de vencimiento",
+      "Fecha fin",
+      "Data di scadenza",
+      "Scadenza",
+      "Date d'expiration",
+      "Date de fin",
+      "Ablaufdatum",
+      "Fim de vigência"
+    ],
+    "expected_type": "date",
+    "hints": [
+      "expiry",
+      "expiration",
+      "venc",
+      "scadenza",
+      "ablauf",
+      "fim"
+    ]
+  },
+  "policy_limits": {
+    "aliases": [
+      "Policy Limits",
+      "Limit",
+      "Sum Insured",
+      "Suma Asegurada",
+      "Soma Segurada",
+      "Massimale",
+      "Limite di polizza",
+      "Limite assicurato",
+      "Limite de apólice",
+      "Limite de police",
+      "Versicherungssumme"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "limit",
+      "sum insured",
+      "suma",
+      "somma",
+      "versicherungssumme"
+    ]
+  },
+  "original_currency": {
+    "aliases": [
+      "Original Currency",
+      "Orig Currency",
+      "Orig Curr",
+      "Currency (Original)",
+      "Moneda Original",
+      "Devise d'origine",
+      "Originale Valuta",
+      "Original Währung",
+      "Moeda original",
+      "Claim Original Currency Code"
+    ],
+    "expected_type": "currency",
+    "hints": [
+      "currency",
+      "curr",
+      "devise",
+      "valuta",
+      "währung",
+      "moneda"
+    ]
+  },
+  "gross_premium_original": {
+    "aliases": [
+      "Gross Premium (Original Currency)",
+      "Gross Premium Original",
+      "Gross Premium (Original)",
+      "Gross Premium",
+      "Prima Lorda",
+      "Prima Bruta",
+      "Prämie brutto",
+      "Prime brute",
+      "Prêmio bruto",
+      "Prima lorda (valuta originale)"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "gross",
+      "premium",
+      "bruto",
+      "brutta",
+      "brutto",
+      "brute"
+    ]
+  },
+  "local_retention": {
+    "aliases": [
+      "Local Retention",
+      "Retention Local",
+      "Retención Local",
+      "Ritenzione locale",
+      "Retenção local",
+      "Lokale Selbstbehalt",
+      "Franquicia local"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "retention",
+      "retención",
+      "ritenzione",
+      "retenção",
+      "selbstbehalt"
+    ]
+  },
+  "gross_premium_after_localised_retention": {
+    "aliases": [
+      "Gross Premium after Localised Retention",
+      "Gross Premium after Localized Retention",
+      "Gross Premium after Retention",
+      "Prima lorda dopo ritenzione",
+      "Prêmio bruto após retenção",
+      "Prämie brutto nach Selbstbehalt",
+      "Prima bruta después de retención"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "after",
+      "retention",
+      "gross premium"
+    ]
+  },
+  "ceded_share": {
+    "aliases": [
+      "Ceded Share %",
+      "Ceded Share",
+      "% Cesión",
+      "% CEDIDA",
+      "Ceded %",
+      "Quota ceduta %",
+      "Quote part rétrocédée %",
+      "Abtretungsanteil %",
+      "Percentual cedido"
+    ],
+    "expected_type": "percent",
+    "hints": [
+      "%",
+      "ceded",
+      "cesión",
+      "cedida",
+      "ceduto",
+      "rétrocédé",
+      "abtretung"
+    ]
+  },
+  "ceded_premium_original": {
+    "aliases": [
+      "Ceded Premium (Original)",
+      "Ceded Premium Original",
+      "Prima ceduta (originale)",
+      "Prime cédée (originale)",
+      "Abgetretene Prämie (Original)",
+      "Prêmio cedido (original)",
+      "Prima cedida (original)"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "ceded",
+      "premium",
+      "cedida",
+      "ceduto",
+      "cédée"
+    ]
+  },
+  "ceding_commission_percentage": {
+    "aliases": [
+      "Ceding Commission %",
+      "Ceding commission %",
+      "Comisión Cesión %",
+      "Commission de cession %",
+      "Provvigione di retrocessione %",
+      "Zessionärsprovision %",
+      "Comissão de cessão %"
+    ],
+    "expected_type": "percent",
+    "hints": [
+      "commission",
+      "%",
+      "cess",
+      "cesión",
+      "cession",
+      "cessão"
+    ]
+  },
+  "ceding_commission": {
+    "aliases": [
+      "Ceding Commission",
+      "Ceding commission",
+      "Comisión Cesión",
+      "Commission de cession",
+      "Provvigione di cessione",
+      "Zessionärsprovision",
+      "Comissão de cessão"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "commission",
+      "cession",
+      "cesión",
+      "cessão",
+      "provvigione",
+      "provision"
+    ]
+  },
+  "brokerage_percentage": {
+    "aliases": [
+      "Brokerage %",
+      "Brokerage Percentage",
+      "Brokerage Commission %",
+      "Comisión Broker %",
+      "Courtage %",
+      "Maklerprovision %",
+      "Intermediazione %",
+      "Corretagem %"
+    ],
+    "expected_type": "percent",
+    "hints": [
+      "brokerage",
+      "courtage",
+      "makler",
+      "%",
+      "commission"
+    ]
+  },
+  "brokerage": {
+    "aliases": [
+      "Brokerage",
+      "Brokerage Commission",
+      "Comisión de Corretaje",
+      "Courtage",
+      "Maklerprovision",
+      "Intermediazione",
+      "Corretagem"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "broker",
+      "courtage",
+      "makler",
+      "corret"
+    ]
+  },
+  "tax_percentage": {
+    "aliases": [
+      "Tax %",
+      "Tax Percentage",
+      "Impuesto %",
+      "Steuer %",
+      "Imposto %",
+      "Tassa %",
+      "Taxa %"
+    ],
+    "expected_type": "percent",
+    "hints": [
+      "tax",
+      "impuesto",
+      "imposto",
+      "steuer",
+      "tassa",
+      "%"
+    ]
+  },
+  "premium_tax": {
+    "aliases": [
+      "Premium Tax",
+      "Insurance Premium Tax",
+      "IPT",
+      "Impuesto sobre Primas",
+      "Impuesto de prima",
+      "Imposta sui premi",
+      "Taxe sur les primes",
+      "Prämiensteuer",
+      "Imposto sobre prémios"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "ipt",
+      "premium tax",
+      "prämiensteuer",
+      "primas",
+      "premi"
+    ]
+  },
+  "other_deductions_percentage": {
+    "aliases": [
+      "Other Deductions %",
+      "Deducciones %",
+      "Otras Deducciones %",
+      "Autres déductions %",
+      "Weitere Abzüge %",
+      "Altre deduzioni %",
+      "Outras deduções %"
+    ],
+    "expected_type": "percent",
+    "hints": [
+      "deduct",
+      "deducci",
+      "déduct",
+      "abzug",
+      "deduzi",
+      "%"
+    ]
+  },
+  "other_deductions": {
+    "aliases": [
+      "Other Deductions",
+      "Deducciones",
+      "Otras Deducciones",
+      "Autres déductions",
+      "Weitere Abzüge",
+      "Altre deduzioni",
+      "Outras deduções"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "deduct",
+      "deducci",
+      "déduct",
+      "abzug",
+      "deduzi"
+    ]
+  },
+  "settlement_currency": {
+    "aliases": [
+      "Settlement Currency",
+      "Settl. Currency",
+      "Currency (Settlement)",
+      "Moneda de Liquidación",
+      "Devise de règlement",
+      "Valuta di regolamento",
+      "Abrechnungswährung",
+      "Moeda de liquidação"
+    ],
+    "expected_type": "currency",
+    "hints": [
+      "settlement",
+      "reglement",
+      "liquid",
+      "abrechnung",
+      "currency"
+    ]
+  },
+  "roe": {
+    "aliases": [
+      "ROE",
+      "Rate of Exchange",
+      "FX Rate",
+      "Exchange Rate",
+      "Tipo de cambio",
+      "Taux de change",
+      "Wechselkurs",
+      "Tasso di cambio",
+      "Taxa de câmbio"
+    ],
+    "expected_type": "fx_rate",
+    "hints": [
+      "fx",
+      "exchange",
+      "roe",
+      "cambio",
+      "wechsel",
+      "change"
+    ]
+  },
+  "net_premium": {
+    "aliases": [
+      "Net Premium",
+      "Premium Net",
+      "Prima Neta",
+      "Prima netta",
+      "Prime nette",
+      "Netto Prämie",
+      "Prêmio líquido",
+      "Prima neta"
+    ],
+    "expected_type": "amount",
+    "hints": [
+      "net",
+      "premium",
+      "neta",
+      "netta",
+      "nette",
+      "netto",
+      "líquido"
+    ]
+  }
+}

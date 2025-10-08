@@ -1,0 +1,34 @@
+orig_header,canonical_truth
+Policy Source,policy_source
+Reporting period,reporting_period
+Master Policy Reference,master_policy_reference
+MASTER Policy Inception,master_policy_inception
+MASTER Policy Expiry,master_policy_expiration
+Policy Number,policy_number
+Type of Inward risk Policy,type_of_inward_risk_policy
+Assured Legal Name,assured_legal_name
+Country,insured_country
+Coverage of Risk,coverage_of_risk
+Issuing Branch,issuing_branch
+Line of Business,line_of_business
+Sub Class (Primary Casualty),sub_class
+Effective Date,cover_inception_date
+Expiry Date,cover_expiration_date
+Policy Limits,policy_limits
+Original Currency,original_currency
+Gross Premium (Original Currency),gross_premium_original
+Local Retention,local_retention
+Gross Premium after Localised Retention,gross_premium_after_localised_retention
+Ceded Share %,ceded_share
+Ceded Premium (Original),ceded_premium_original
+Ceding Commission %,ceding_commission_percentage
+Ceding Commission,ceding_commission
+Brokerage %,brokerage_percentage
+Brokerage,brokerage
+Tax %,tax_percentage
+Premium Tax,premium_tax
+Other Deductions %,other_deductions_percentage
+Other Deductions,other_deductions
+Settlement Currency,settlement_currency
+ROE,roe
+Net Premium,net_premium
