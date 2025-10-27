@@ -1,37 +1,50 @@
-{
-  "input_file": "dataset/Principal-Sample-Life-Insurance-Policy.pdf",
-  "output_file": "output/principal_life_extracted.json",
-  "insurance_type": "Group Life",
-  "fields": [
-    {
-      "field_name": "Policy Number",
-      "keywords": ["GROUP POLICY NO", "POLICY NO", "Policy Number"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Employer Name",
-      "keywords": ["EMPLOYER", "Policyholder"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Effective Date",
-      "keywords": ["Effective Date", "Date of Issue", "Policy Effective"],
-      "data_type": "date"
-    },
-    {
-      "field_name": "Coverage Type",
-      "keywords": ["Coverage", "Type of Insurance"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Member Life Insurance Amount",
-      "keywords": ["Schedule of Insurance", "Member Life Insurance", "Sum Insured"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Dependent Life Insurance",
-      "keywords": ["Dependent Life Insurance", "Dependent Child"],
-      "data_type": "string"
-    }
-  ]
-}
+[
+  {
+    "field_name": "PolicyNumber",
+    "description": "Group Policy Number printed on the cover page",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "EmployerName",
+    "description": "Employer or Policyholder name",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "EffectiveDate",
+    "description": "Date when policy becomes effective",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "CoverageType",
+    "description": "Type of insurance coverage provided under this policy",
+    "probable_pages": [2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": true
+  },
+  {
+    "field_name": "MemberLifeInsuranceAmount",
+    "description": "Amount of member life insurance listed in schedule",
+    "probable_pages": [2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "DependentLifeInsurance",
+    "description": "Dependent life insurance coverage if applicable",
+    "probable_pages": [2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": true
+  }
+]
