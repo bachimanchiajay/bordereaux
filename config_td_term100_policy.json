@@ -1,37 +1,50 @@
-{
-  "input_file": "dataset/term100-market-agent-disclosure-en.pdf",
-  "output_file": "output/td_term100_extracted.json",
-  "insurance_type": "Term Life",
-  "fields": [
-    {
-      "field_name": "Policy Number",
-      "keywords": ["Policy #", "Insurance Policy #", "Policy Number"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Insured Name",
-      "keywords": ["Insured Person", "Policy Owner"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Sum Insured",
-      "keywords": ["Sum Insured", "Amount of Insurance"],
-      "data_type": "currency"
-    },
-    {
-      "field_name": "Effective Date",
-      "keywords": ["Effective Date", "Issue Date"],
-      "data_type": "date"
-    },
-    {
-      "field_name": "Premium Amount",
-      "keywords": ["Premium", "Monthly Premium", "Premium Payment"],
-      "data_type": "currency"
-    },
-    {
-      "field_name": "Beneficiary",
-      "keywords": ["Beneficiary", "Beneficiary Designation"],
-      "data_type": "string"
-    }
-  ]
-}
+[
+  {
+    "field_name": "PolicyNumber",
+    "description": "Unique policy number for Term 100 Life Insurance",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "InsuredName",
+    "description": "Name of the insured person or policy owner",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "EffectiveDate",
+    "description": "Effective or issue date of the policy",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "PremiumAmount",
+    "description": "Monthly or annual premium payable",
+    "probable_pages": [1,2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "SumInsured",
+    "description": "Total sum insured under this term policy",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "Beneficiary",
+    "description": "Designated beneficiary of this policy",
+    "probable_pages": [2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": true
+  }
+]
