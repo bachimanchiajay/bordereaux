@@ -1,32 +1,42 @@
-{
-  "input_file": "dataset/231203-gwl-policy.pdf",
-  "output_file": "output/group_whole_life_extracted.json",
-  "insurance_type": "Group Whole Life",
-  "fields": [
-    {
-      "field_name": "Standard Name",
-      "keywords": ["GROUP WHOLE LIFE INSURANCE POLICY", "UNIFORM STANDARDS"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Adopted Date",
-      "keywords": ["Date Adopted", "Effective Date"],
-      "data_type": "date"
-    },
-    {
-      "field_name": "Purpose",
-      "keywords": ["Purpose and Scope", "Purpose"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Coverage Type",
-      "keywords": ["Whole Life Insurance", "Coverage"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Employer Definition",
-      "keywords": ["Policyholder", "Employer", "Entity to whom policy is issued"],
-      "data_type": "string"
-    }
-  ]
-}
+[
+  {
+    "field_name": "StandardName",
+    "description": "Document title or standard name for Group Whole Life Insurance",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "AdoptedDate",
+    "description": "Date adopted or approved by Interstate Insurance Product Regulation Commission",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "Purpose",
+    "description": "Purpose and scope statement of the policy standard",
+    "probable_pages": [1,2],
+    "type": "paragraph",
+    "multipage_value": true,
+    "multiline_value": true
+  },
+  {
+    "field_name": "CoverageDefinition",
+    "description": "Definition of coverage and policyholder obligations",
+    "probable_pages": [2,3],
+    "type": "paragraph",
+    "multipage_value": true,
+    "multiline_value": true
+  },
+  {
+    "field_name": "Eligibility",
+    "description": "Eligibility criteria for insured members",
+    "probable_pages": [3],
+    "type": "bullet-points",
+    "multipage_value": false,
+    "multiline_value": true
+  }
+]
