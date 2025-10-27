@@ -1,0 +1,32 @@
+{
+  "input_file": "dataset/231203-gwl-policy.pdf",
+  "output_file": "output/group_whole_life_extracted.json",
+  "insurance_type": "Group Whole Life",
+  "fields": [
+    {
+      "field_name": "Standard Name",
+      "keywords": ["GROUP WHOLE LIFE INSURANCE POLICY", "UNIFORM STANDARDS"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Adopted Date",
+      "keywords": ["Date Adopted", "Effective Date"],
+      "data_type": "date"
+    },
+    {
+      "field_name": "Purpose",
+      "keywords": ["Purpose and Scope", "Purpose"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Coverage Type",
+      "keywords": ["Whole Life Insurance", "Coverage"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Employer Definition",
+      "keywords": ["Policyholder", "Employer", "Entity to whom policy is issued"],
+      "data_type": "string"
+    }
+  ]
+}

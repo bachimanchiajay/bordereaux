@@ -1,0 +1,37 @@
+{
+  "input_file": "dataset/life-insurance-contract.pdf",
+  "output_file": "output/university_life_extracted.json",
+  "insurance_type": "Group Life (University)",
+  "fields": [
+    {
+      "field_name": "Employer Name",
+      "keywords": ["University", "Employer", "Policyholder"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Policy Number",
+      "keywords": ["Policy No", "Policy Number"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Effective Date",
+      "keywords": ["Effective Date", "Date of Coverage"],
+      "data_type": "date"
+    },
+    {
+      "field_name": "Coverage Type",
+      "keywords": ["Life Insurance Plan", "Coverage"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Maximum Benefit",
+      "keywords": ["Maximum", "Benefit", "Sum Insured"],
+      "data_type": "currency"
+    },
+    {
+      "field_name": "Accidental Death Coverage",
+      "keywords": ["Accidental Death", "AD&D"],
+      "data_type": "string"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "input_file": "dataset/Principal-Sample-Life-Insurance-Policy.pdf",
+  "output_file": "output/principal_life_extracted.json",
+  "insurance_type": "Group Life",
+  "fields": [
+    {
+      "field_name": "Policy Number",
+      "keywords": ["GROUP POLICY NO", "POLICY NO", "Policy Number"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Employer Name",
+      "keywords": ["EMPLOYER", "Policyholder"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Effective Date",
+      "keywords": ["Effective Date", "Date of Issue", "Policy Effective"],
+      "data_type": "date"
+    },
+    {
+      "field_name": "Coverage Type",
+      "keywords": ["Coverage", "Type of Insurance"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Member Life Insurance Amount",
+      "keywords": ["Schedule of Insurance", "Member Life Insurance", "Sum Insured"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Dependent Life Insurance",
+      "keywords": ["Dependent Life Insurance", "Dependent Child"],
+      "data_type": "string"
+    }
+  ]
+}

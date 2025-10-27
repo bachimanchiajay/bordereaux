@@ -1,0 +1,37 @@
+{
+  "input_file": "dataset/term100-market-agent-disclosure-en.pdf",
+  "output_file": "output/td_term100_extracted.json",
+  "insurance_type": "Term Life",
+  "fields": [
+    {
+      "field_name": "Policy Number",
+      "keywords": ["Policy #", "Insurance Policy #", "Policy Number"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Insured Name",
+      "keywords": ["Insured Person", "Policy Owner"],
+      "data_type": "string"
+    },
+    {
+      "field_name": "Sum Insured",
+      "keywords": ["Sum Insured", "Amount of Insurance"],
+      "data_type": "currency"
+    },
+    {
+      "field_name": "Effective Date",
+      "keywords": ["Effective Date", "Issue Date"],
+      "data_type": "date"
+    },
+    {
+      "field_name": "Premium Amount",
+      "keywords": ["Premium", "Monthly Premium", "Premium Payment"],
+      "data_type": "currency"
+    },
+    {
+      "field_name": "Beneficiary",
+      "keywords": ["Beneficiary", "Beneficiary Designation"],
+      "data_type": "string"
+    }
+  ]
+}
