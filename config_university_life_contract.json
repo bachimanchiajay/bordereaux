@@ -1,37 +1,50 @@
-{
-  "input_file": "dataset/life-insurance-contract.pdf",
-  "output_file": "output/university_life_extracted.json",
-  "insurance_type": "Group Life (University)",
-  "fields": [
-    {
-      "field_name": "Employer Name",
-      "keywords": ["University", "Employer", "Policyholder"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Policy Number",
-      "keywords": ["Policy No", "Policy Number"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Effective Date",
-      "keywords": ["Effective Date", "Date of Coverage"],
-      "data_type": "date"
-    },
-    {
-      "field_name": "Coverage Type",
-      "keywords": ["Life Insurance Plan", "Coverage"],
-      "data_type": "string"
-    },
-    {
-      "field_name": "Maximum Benefit",
-      "keywords": ["Maximum", "Benefit", "Sum Insured"],
-      "data_type": "currency"
-    },
-    {
-      "field_name": "Accidental Death Coverage",
-      "keywords": ["Accidental Death", "AD&D"],
-      "data_type": "string"
-    }
-  ]
-}
+[
+  {
+    "field_name": "EmployerName",
+    "description": "Name of the university or employer providing group life insurance",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "PolicyNumber",
+    "description": "Group policy number referenced in the contract",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "EffectiveDate",
+    "description": "Date the group life contract becomes effective",
+    "probable_pages": [1],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "CoverageType",
+    "description": "Coverage details such as term life or AD&D",
+    "probable_pages": [2],
+    "type": "paragraph",
+    "multipage_value": false,
+    "multiline_value": true
+  },
+  {
+    "field_name": "MaximumBenefit",
+    "description": "Maximum benefit payable under this policy",
+    "probable_pages": [2],
+    "type": "key-value",
+    "multipage_value": false,
+    "multiline_value": false
+  },
+  {
+    "field_name": "AccidentalDeathCoverage",
+    "description": "Details of Accidental Death & Dismemberment (AD&D) coverage",
+    "probable_pages": [3],
+    "type": "paragraph",
+    "multipage_value": false,
+    "multiline_value": true
+  }
+]
