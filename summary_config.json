@@ -1,0 +1,44 @@
+[
+  {
+    "field_name": "HealthInsuranceSummary",
+    "description": "Summarize the overall performance of the Health Insurance Division for 2025. Include insights such as policy count, claims processed, average settlement time, customer satisfaction, and major initiatives mentioned.",
+    "search_keys": [
+      "Health Insurance Policy Summary",
+      "Health Division",
+      "Claims Processed",
+      "Customer Satisfaction",
+      "Renewal Rate"
+    ],
+    "type": "summary",
+    "multipage_value": false,
+    "multiline_value": true
+  },
+  {
+    "field_name": "MotorInsuranceSummary",
+    "description": "Provide a summary of the Motor Insurance Division performance for 2025. Mention total policies, claims processed, fraud detection improvements, and customer satisfaction metrics.",
+    "search_keys": [
+      "Motor Insurance Policy Summary",
+      "Motor Division",
+      "Fraudulent Claims Detected",
+      "Customer Satisfaction",
+      "Renewal Rate"
+    ],
+    "type": "summary",
+    "multipage_value": false,
+    "multiline_value": true
+  },
+  {
+    "field_name": "OverallInsuranceHighlights",
+    "description": "Generate a combined summary comparing the Health and Motor divisions. Highlight similarities and differences in renewal rate, customer satisfaction, and automation initiatives.",
+    "search_keys": [
+      "Health Division",
+      "Motor Division",
+      "Renewal Rate",
+      "Customer Satisfaction",
+      "AI-driven systems"
+    ],
+    "type": "summary",
+    "multipage_value": true,
+    "multiline_value": true
+  }
+]
