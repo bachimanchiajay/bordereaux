@@ -1,0 +1,18 @@
+[
+  {
+    "field_name": "JanuaryTransactions",
+    "description": "Tabular data for customer transactions during January",
+    "probable_pages": [1],
+    "type": "table",
+    "multipage_value": false,
+    "multiline_value": true
+  },
+  {
+    "field_name": "FebruaryTransactions",
+    "description": "Tabular data for customer transactions during February",
+    "probable_pages": [2],
+    "type": "table",
+    "multipage_value": false,
+    "multiline_value": true
+  }
+]
