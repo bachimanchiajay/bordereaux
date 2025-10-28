@@ -10,6 +10,7 @@
       "Total Sales"
     ],
     "type": "table",
+    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
     "multipage_value": true,
     "multiline_value": true
   },
@@ -18,6 +19,7 @@
     "description": "Identify the country with the highest total sales value in the report table.",
     "search_keys": ["Country", "Total Sales", "Top Country"],
     "type": "table",
+    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
     "multipage_value": false,
     "multiline_value": true
   },
@@ -31,6 +33,7 @@
       "Product Performance"
     ],
     "type": "table",
+    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
     "multipage_value": false,
     "multiline_value": true
   }
