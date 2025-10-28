@@ -1,16 +1,35 @@
 [
   {
-    "field_name": "JanuaryTransactions",
-    "description": "Tabular data for customer transactions during January",
-    "probable_pages": [1],
+    "field_name": "AnnualSalesTable",
+    "description": "Extract the complete table showing year, month, product, units sold, unit price, total sales, and country.",
+    "search_keys": [
+      "Sales Performance Report",
+      "Annual Sales Report",
+      "Strawberry Sales Department",
+      "Units Sold",
+      "Total Sales"
+    ],
+    "type": "table",
+    "multipage_value": true,
+    "multiline_value": true
+  },
+  {
+    "field_name": "TopPerformingCountry",
+    "description": "Identify the country with the highest total sales value in the report table.",
+    "search_keys": ["Country", "Total Sales", "Top Country"],
     "type": "table",
     "multipage_value": false,
     "multiline_value": true
   },
   {
-    "field_name": "FebruaryTransactions",
-    "description": "Tabular data for customer transactions during February",
-    "probable_pages": [2],
+    "field_name": "MonthlySalesBreakdown",
+    "description": "Extract the month-wise breakdown of total units sold and total revenue across all products.",
+    "search_keys": [
+      "Month",
+      "Units Sold",
+      "Total Sales",
+      "Product Performance"
+    ],
     "type": "table",
     "multipage_value": false,
     "multiline_value": true
