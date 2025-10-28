@@ -1,39 +1,64 @@
 [
   {
     "field_name": "AnnualSalesTable",
-    "description": "Extract the complete table showing year, month, product, units sold, unit price, total sales, and country.",
+    "description": "Extract the complete annual sales table in a structured JSON format. Each row should contain Year, Month, Product, Units Sold, Unit Price, Total Sales, and Country as key-value pairs. Ensure the output follows the schema with 'field_name', 'rows', 'row_num', and 'values'.",
     "search_keys": [
-      "Sales Performance Report",
       "Annual Sales Report",
+      "Sales Performance Report",
       "Strawberry Sales Department",
       "Units Sold",
-      "Total Sales"
+      "Total Sales",
+      "Country"
     ],
     "type": "table",
-    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
+    "columns": [
+      "Year",
+      "Month",
+      "Product",
+      "Units Sold",
+      "Unit Price",
+      "Total Sales",
+      "Country"
+    ],
+    "output_format_hint": "Return output as JSON with 'field_name', 'rows', and each 'row' containing a 'row_num' and a 'values' dictionary mapping each column name to its extracted value.",
     "multipage_value": true,
     "multiline_value": true
   },
   {
     "field_name": "TopPerformingCountry",
-    "description": "Identify the country with the highest total sales value in the report table.",
-    "search_keys": ["Country", "Total Sales", "Top Country"],
+    "description": "From the extracted sales table, identify the country with the highest Total Sales value. Output should include the country name and its corresponding total sales figure.",
+    "search_keys": [
+      "Top Performing Country",
+      "Highest Sales",
+      "Country",
+      "Total Sales"
+    ],
     "type": "table",
-    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
+    "columns": [
+      "Country",
+      "Total Sales"
+    ],
+    "output_format_hint": "Output a single JSON object with keys 'Country' and 'Total Sales'.",
     "multipage_value": false,
-    "multiline_value": true
+    "multiline_value": false
   },
   {
     "field_name": "MonthlySalesBreakdown",
-    "description": "Extract the month-wise breakdown of total units sold and total revenue across all products.",
+    "description": "Extract the month-wise summary showing Month, Units Sold, and Total Sales for all products. Output should be in a structured table format.",
     "search_keys": [
       "Month",
       "Units Sold",
       "Total Sales",
+      "Monthly Breakdown",
       "Product Performance"
     ],
     "type": "table",
-    "columns": ["Year", "Month", "Product", "Units Sold", "Unit Price", "Total Sales", "Country"],
+    "columns": [
+      "Month",
+      "Units Sold",
+      "Total Sales"
+    ],
+    "output_format_hint": "Return an array of JSON objects with 'Month', 'Units Sold', and 'Total Sales' fields for each month.",
     "multipage_value": false,
     "multiline_value": true
   }
