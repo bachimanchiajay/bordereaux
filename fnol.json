@@ -1,0 +1,66 @@
+[
+  {
+    "field_name": "PolicyholderDetails",
+    "description": "Extract all details of the policyholder including name, date of birth, address, contact details, and insurance company information.",
+    "type": "key-value",
+    "search_keys": [
+      "Policyholder Details",
+      "Name",
+      "Date of Birth",
+      "Address",
+      "Phone Number",
+      "Email Address",
+      "Insurance Company",
+      "Policy Number",
+      "Occupation",
+      "Alternate Contact Person"
+    ],
+    "multiline_value": true,
+    "multipage_value": false
+  },
+  {
+    "field_name": "VehicleDetails",
+    "description": "Extract all vehicle-related details including make, model, year, license plate number, VIN, mileage, purchase date, and loan/lease information.",
+    "type": "key-value",
+    "search_keys": [
+      "Vehicle Details",
+      "Make/Model",
+      "Year",
+      "License Plate Number",
+      "VIN",
+      "Vehicle Identification Number",
+      "Current Mileage",
+      "Purchase Date",
+      "Purchase Price",
+      "Loan/Lease Information"
+    ],
+    "multiline_value": true,
+    "multipage_value": false
+  },
+  {
+    "field_name": "IncidentDetails",
+    "description": "Extract all information related to the incident including date, time, location, and weather conditions.",
+    "type": "key-value",
+    "search_keys": [
+      "Incident Details",
+      "Date and Time of Incident",
+      "Location",
+      "Weather Conditions"
+    ],
+    "multiline_value": true,
+    "multipage_value": false
+  },
+  {
+    "field_name": "ClaimMetadata",
+    "description": "Extract summary claim metadata such as document title, claim type, and key identifiers if present at the top of the document.",
+    "type": "key-value",
+    "search_keys": [
+      "First Notice of Loss",
+      "FNOL",
+      "Vehicle Insurance",
+      "Claim"
+    ],
+    "multiline_value": false,
+    "multipage_value": false
+  }
+]
