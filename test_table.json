@@ -1,7 +1,7 @@
 [
   {
     "field_name": "AnnualSalesTable",
-    "description": "Extract the complete annual sales table in a structured JSON format. Each row should contain Year, Month, Product, Units Sold, Unit Price, Total Sales, and Country as key-value pairs. Ensure the output follows the schema with 'field_name', 'rows', 'row_num', and 'values'.",
+    "description": "Extract the complete annual sales table in a structured JSON format. Each row must include Year, Month, Product, Units Sold, Unit Price, Total Sales, and Country. Return the output in a schema-compliant format with 'rows', each containing 'row_num' and 'values'.",
     "search_keys": [
       "Annual Sales Report",
       "Sales Performance Report",
@@ -20,16 +20,17 @@
       "Total Sales",
       "Country"
     ],
-    "output_format_hint": "Return output as JSON with 'field_name', 'rows', and each 'row' containing a 'row_num' and a 'values' dictionary mapping each column name to its extracted value.",
+    "output_format_hint": "Return output strictly as JSON with 'field_name', 'rows', and 'continue_next_page'. Each 'row' should contain a 'row_num' (integer) and 'values' dictionary where each key is a column name. Example: {'row_num': 1, 'values': {'Year': '2025', 'Month': 'August', 'Product': 'Frozen Strawberries', 'Units Sold': '190', 'Unit Price': '1,250', 'Total Sales': '2,37,500', 'Country': 'Germany'}}",
+    "schema_mapping_hint": "Use 'row_num' instead of 'row_number', and 'values' instead of 'cols'. Each column must be inside the 'values' dictionary.",
     "multipage_value": true,
     "multiline_value": true
   },
   {
     "field_name": "TopPerformingCountry",
-    "description": "From the extracted sales table, identify the country with the highest Total Sales value. Output should include the country name and its corresponding total sales figure.",
+    "description": "Identify the country with the highest Total Sales value from the Annual Sales Table. Output the country name and its corresponding Total Sales.",
     "search_keys": [
       "Top Performing Country",
-      "Highest Sales",
+      "Highest Total Sales",
       "Country",
       "Total Sales"
     ],
@@ -38,13 +39,14 @@
       "Country",
       "Total Sales"
     ],
-    "output_format_hint": "Output a single JSON object with keys 'Country' and 'Total Sales'.",
+    "output_format_hint": "Output a single JSON object in schema format: {'row_num': 1, 'values': {'Country': 'France', 'Total Sales': '2,80,000'}}",
+    "schema_mapping_hint": "Ensure the output follows the same structure with 'row_num' and 'values' keys.",
     "multipage_value": false,
     "multiline_value": false
   },
   {
     "field_name": "MonthlySalesBreakdown",
-    "description": "Extract the month-wise summary showing Month, Units Sold, and Total Sales for all products. Output should be in a structured table format.",
+    "description": "Extract the month-wise breakdown of total Units Sold and Total Sales across all products. Output should be in structured table format with one row per month.",
     "search_keys": [
       "Month",
       "Units Sold",
@@ -58,7 +60,8 @@
       "Units Sold",
       "Total Sales"
     ],
-    "output_format_hint": "Return an array of JSON objects with 'Month', 'Units Sold', and 'Total Sales' fields for each month.",
+    "output_format_hint": "Return an array of JSON objects, each containing 'row_num' and 'values' dictionary. Example: {'row_num': 1, 'values': {'Month': 'August', 'Units Sold': '190', 'Total Sales': '2,37,500'}}",
+    "schema_mapping_hint": "Ensure to use 'row_num' and 'values' fields instead of 'row_number' and 'cols'.",
     "multipage_value": false,
     "multiline_value": true
   }
