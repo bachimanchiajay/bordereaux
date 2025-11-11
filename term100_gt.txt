@@ -1,0 +1,59 @@
+[
+  {
+    "field_name": "PolicyNumber",
+    "type": "key_value",
+    "value": "12345-ABC"
+  },
+  {
+    "field_name": "CertificateNumber",
+    "type": "key_value",
+    "value": "CERT-9988"
+  },
+  {
+    "field_name": "InvoiceLineItems",
+    "type": "table",
+    "value": [
+      {
+        "row_number": 1,
+        "cells": [
+          { "col_number": 1, "value": "Service A" },
+          { "col_number": 2, "value": "150.00" }
+        ]
+      },
+      {
+        "row_number": 2,
+        "cells": [
+          { "col_number": 1, "value": "Service B" },
+          { "col_number": 2, "value": "200.00" }
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "MainSummary",
+    "type": "summary",
+    "value": "This is the expected summary of the entire document."
+  },
+  {
+    "field_name": "ELIGIBILITY",
+    "type": "bullet-points",
+    "value": [
+      "This is the first eligibility bullet point. PLEASE UPDATE.",
+      "This is the second eligibility bullet point. PLEASE UPDATE."
+    ]
+  },
+  {
+    "field_name": "LivingBenefit",
+    "type": "bullet-points",
+    "value": [
+      "This is the first living benefit bullet point. PLEASE UPDATE."
+    ]
+  },
+  {
+    "field_name": "WhenWeWillPayNonInsuranceBenefit",
+    "type": "bullet-points",
+    "value": [
+      "This is the first 'when we will pay' bullet point. PLEASE UPDATE."
+    ]
+  }
+]
