@@ -5,7 +5,8 @@ from typing import List, Dict, Any, Optional
 
 # Try to import thefuzz for fuzzy matching
 try:
-    from thefuzz import fuzz
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
 except ImportError:
     print("Error: 'thefuzz' library not found. Please run: pip install thefuzz python-Levenshtein")
     sys.exit(1)
