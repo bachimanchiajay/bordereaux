@@ -71,3 +71,21 @@ FINAL OUTPUT
 - A table of what moved where (old file/function -> new file/function).
 - Bugs or suspicious logic you noticed but intentionally left unchanged.
 - Anything uncertain, and a manual test checklist for me.
+
+
+
+
+Act as a Senior Python Architect and Software Engineer. Inspect my entire existing Python Microsoft Teams backend project and directly fix all code quality issues before Git push.
+
+- Follow PEP 8, SOLID, DRY, KISS, and clean architecture principles.
+- Refactor poorly structured code into appropriate modules with clear separation of Teams handlers, business logic, database connections, and SQL queries.
+- Centralize SQL queries in a dedicated module and implement safe, reusable database connection management with proper pooling, cleanup, and transaction handling.
+- Simplify deeply nested loops, eliminate duplicate logic, unnecessary database calls, unused imports, and overly complex functions.
+- Add appropriate type hints, meaningful exception handling, structured logging, and secure configuration.
+- Fix SQL injection risks, hardcoded credentials, resource leaks, and concurrency issues.
+- Preserve all existing business logic, API contracts, Teams functionality, and database behavior.
+- Add or update tests and run available tests, linting, formatting, and type checks. Fix failures caused by your changes.
+- Make changes directly in the existing files. Do not rewrite everything unnecessarily, introduce needless design patterns, or generate reports instead of fixing code.
+- Do not commit, push, or deploy. Do not overwrite unrelated changes. Review the final Git diff and ensure no secrets are included.
+
+**Start fixing the code immediately. Work incrementally, validate every change, and continue until all safely fixable issues are resolved. Clearly identify any remaining failures or blockers.**
