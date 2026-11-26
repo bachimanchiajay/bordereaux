@@ -1,8 +1,18 @@
-# TASK: Complete Phase 4 and Phase 5 — SNOW Services Docker E2E Testing
+# MASTER TASK: Complete Phase 4 & Phase 5 — SNOW Docker E2E Integration and Microsoft 365 Agents Playground Testing
 
-Act as a Senior Python Backend Engineer, Docker Engineer, QA Automation Engineer and Microsoft Bot Framework Integration Specialist.
+Act as a Principal Python Backend Engineer, Senior AI Architect, Docker Engineer, Microsoft Teams Bot Framework Specialist and QA Automation Engineer.
 
-I have completed:
+I have three interconnected services:
+
+1. snow-knowledge-service
+2. chat-orchestrator
+3. snow-research-teams-bot
+
+My objective is to complete the entire application flow using Docker images and validate it through Microsoft 365 Agents Playground.
+
+IMPORTANT: All three application services must run inside Docker containers. Do not run Python application services directly on my Mac.
+
+I have already completed:
 
 - Phase 1: Repository and configuration audit.
 - Phase 2: Docker integration setup.
@@ -10,96 +20,145 @@ I have completed:
 
 Phase 4 and Phase 5 are partially completed.
 
-Your responsibility is to resolve the outstanding issues and complete the remaining tests.
+Do not generate any Markdown or PDF technical documentation in this execution. Documentation will be generated separately after complete E2E validation.
 
-IMPORTANT:
-- Do not generate Markdown or PDF documentation.
-- Do not create technical guides or architecture documents.
-- Documentation will be handled separately after successful end-to-end testing.
-- All three application services must run inside Docker.
-- Do not run Python application services directly on the host.
-- Preserve existing working configurations and persistent data.
-- Do not unnecessarily modify application logic.
-- Do not invent credentials, secrets or certificates.
-- Never print actual secret values.
+# 1. STRICT ENTERPRISE NETWORKING AND SECURITY REQUIREMENTS
 
-# CURRENT VERIFIED STATUS
+This is a financial-services company environment.
 
-## Existing infrastructure
+The following tools and services are STRICTLY PROHIBITED:
 
+- ngrok
+- Microsoft Dev Tunnels
+- LocalTunnel
+- Cloudflare Tunnel
+- Any other public tunnelling service.
+- Any unapproved external tunnelling or reverse-proxy service.
+
+Do not:
+- Install these tools.
+- Start these tools.
+- Add them to Docker Compose.
+- Add their configuration to environment files.
+- Create public tunnel URLs.
+- Expose internal application services through an unapproved public endpoint.
+
+Use:
+- Docker Compose networking.
+- Internal Docker service-name resolution.
+- Localhost port mapping where appropriate.
+- Existing Docker network configuration.
+- Existing approved corporate networking infrastructure.
+
+The preferred local testing flow is:
+
+Microsoft 365 Agents Playground
+→ Locally accessible bot endpoint
+→ Teams Bot Docker container
+→ Chat Orchestrator Docker container
+→ Knowledge Service Docker container
+→ PostgreSQL/pgvector
+→ Real Tarvos LLM Gateway
+
+First inspect whether the installed Playground can directly reach the locally exposed Docker endpoint.
+
+Do not assume that local connectivity is supported in every Playground configuration.
+
+If external HTTPS connectivity is required, STOP and explain the approved enterprise alternatives. Do not introduce a tunnel as a workaround.
+
+Preserve production authentication and security controls.
+
+# 2. CURRENT VERIFIED IMPLEMENTATION
+
+Use these previous execution results as the baseline.
+
+## Docker infrastructure
+
+- Docker Compose E2E environment exists.
+- Shared network: snow-e2e-net.
 - PostgreSQL with pgvector is healthy.
 - Database initialization passed on rerun.
-- Knowledge service is healthy.
-- Chat orchestrator is healthy.
-- Real Tarvos LLM integration works.
-- Knowledge service reports approximately 56,266 vectors.
-- Embedding dimension: 768.
-- Embedding model: nomic-embed-text-v1.5.
-- Reranker: ms-marco-MiniLM-L-6-v2.
+- Persistent database and vector data must be preserved.
 
-## Existing Docker images
+## Application images
 
 - snow-knowledge-service:e2e
 - snow-orchestrator:e2e
 - snow-teams-bot:e2e
 
-## Existing application ports
+## Application ports
 
 - Knowledge service: 8012.
 - Chat orchestrator: 8000.
 - Teams bot: 3978.
 
-## Existing successful tests
+## Knowledge service
+
+- Approximately 56,266 vector records.
+- Embedding dimension: 768.
+- Embedding model: nomic-embed-text-v1.5.
+- Reranker: ms-marco-MiniLM-L-6-v2.
+- Dense retrieval tested.
+- Hybrid retrieval tested.
+- Cross-encoder reranking tested.
+- Ticket exclusion tested.
+
+## Chat orchestrator
+
+- Container healthy.
+- Successfully communicates with knowledge service.
+- Real Tarvos LLM integration tested.
+- /snow/chat returned HTTP 200.
+- Actual generated response and five source tickets received.
+
+## Existing test results
 
 - Orchestrator smoke test: 12/12 passed.
 - Bot unit tests: 155 passed.
-- Orchestrator unit tests: 54 passed.
-- Knowledge service tests: 162 passed.
+- Orchestrator tests: 54 passed.
+- Knowledge tests: 162 passed.
+- Knowledge tests: 5 skipped due to Helm dependency.
+- Knowledge tests: 1 failed due to .gitignore environmental check.
+- Knowledge tests: 97 skipped due to missing database configuration.
 
-Previously observed additional results:
+Do not unnecessarily rebuild or modify the working RAG and LLM integration.
 
-- Knowledge service: 5 Helm-related tests skipped.
-- Knowledge service: 1 .gitignore-related test failed.
-- Knowledge service: 97 database-dependent tests skipped.
+# 3. PHASE 4 — COMPLETE SERVICE STARTUP
 
-The real LLM chat flow has already returned HTTP 200, an actual answer and five source tickets.
+## Issue A: Teams bot startup
 
-Do not unnecessarily repeat successful tests unless changes require regression testing.
+The bot has not successfully started.
 
-# PHASE 4 — COMPLETE SERVICE STARTUP AND VALIDATION
-
-## ISSUE 1: Teams bot has not started
-
-The following configuration is currently missing:
+The previously identified missing configuration:
 
 1. ORCHESTRATOR_SCOPE
 2. bot-ca.pem
 
-Inspect the actual source code and configuration.
-
-Determine:
+Inspect the actual source code and identify:
 
 - Where ORCHESTRATOR_SCOPE is consumed.
-- What value and format are expected.
-- Which Entra application registration it relates to.
-- What authentication permissions are required.
-- How bot-ca.pem is loaded.
-- Whether the CA bundle is mandatory.
-- Which certificate format and mount path are expected.
+- Expected value and format.
+- Required Entra application registration.
+- Required API permissions.
+- Whether the scope represents the orchestrator API.
+- How the bot uses bot-ca.pem.
+- Expected certificate format.
+- Certificate mount path.
+- Whether the CA bundle is mandatory for the current connection.
 
-Do not invent the scope.
+Do not invent values.
 
-Do not generate a dummy certificate.
+Do not create a dummy certificate.
 
 Do not disable TLS verification.
 
-If real configuration is missing, request it from me and continue independent tests that do not require it.
+If the real configuration is missing, ask me to provide it.
 
-## ISSUE 2: Start the complete Docker stack
+Continue independent tests wherever possible.
 
-Once the missing bot configuration is supplied:
+## Issue B: Start the complete Docker stack
 
-Start services in dependency order:
+Once prerequisites are available, start in dependency order:
 
 1. PostgreSQL.
 2. Database initialization.
@@ -109,179 +168,294 @@ Start services in dependency order:
 
 Validate:
 
-- Container status.
-- Health checks.
-- Startup logs.
-- Container ports.
-- Docker DNS resolution.
-- Internal service connectivity.
+- Container health.
+- Application startup.
+- Correct ports.
+- Docker DNS.
+- Internal service communication.
 - Database connectivity.
 - Bot health endpoint.
 
-Use the existing Docker Compose configuration and service names.
+Use existing Compose service names and configuration.
 
-Do not delete existing database volumes or vector records.
+Preserve all persistent volumes and existing vector records.
 
-# PHASE 5 — COMPLETE REMAINING INTEGRATION TESTS
+# 4. PHASE 5 — COMPLETE REMAINING INTEGRATION TESTS
 
-## ISSUE 3: Scenario 1 — All three services start successfully
+Previously reported scenario status:
 
-Previous result: Partial. The bot was not started.
+1. All three services start: Partial.
+2. Bot endpoint responds: Not run.
+3. Bot calls orchestrator: Partial.
+4. Orchestrator communicates with knowledge service: Passed.
+5. Knowledge retrieval works: Passed.
+6. LLM generates a response: Passed.
+7. Response returns through orchestrator: Passed.
+8. Bot sends final response through Bot Framework: Not run.
 
-Complete startup and validate all three application containers.
+Complete only the outstanding scenarios and run regression tests when necessary.
 
-Report actual health-check results.
+## Scenario 1: All three services start
 
-## ISSUE 4: Scenario 2 — Bot endpoint responds correctly
+Start and validate all three application containers.
 
-Previous result: Not run.
+Verify actual health status and logs.
 
-After the bot starts:
+## Scenario 2: Bot endpoint responds
 
-- Test its actual health endpoint.
-- Verify its listening port.
-- Inspect startup logs.
-- Verify that the endpoint is accessible from the intended Docker network.
+- Test the actual health endpoint.
+- Verify port 3978.
+- Inspect bot logs.
+- Confirm the messaging route exists.
+- Verify local endpoint connectivity.
 
-Do not confuse a health endpoint response with successful Bot Framework authentication.
+Distinguish health endpoint success from authenticated messaging success.
 
-## ISSUE 5: Scenario 3 — Bot calls chat-orchestrator
+## Scenario 3: Bot calls orchestrator
 
-Previous result: Partially tested.
+The previous bot client test received a real answer and five source tickets from the orchestrator.
 
-The existing bot client test executed inside the bot image and received a real orchestrator answer with five source tickets.
+However, the actual Entra authentication and Bot Framework flow have not been validated.
 
-However, the actual Entra authentication and Bot Framework messaging flow have not been validated.
+Verify:
 
-Now verify:
-
-- Bot-to-orchestrator authentication.
 - ORCHESTRATOR_SCOPE.
-- Correct internal service URL.
+- Bot-to-orchestrator authentication.
+- Internal service URL.
 - Request payload.
 - Response payload.
 - Error handling.
 
-Use the real orchestrator.
+Use the actual orchestrator, not a mock.
 
-## ISSUE 6: Scenario 8 — Bot returns answer through Bot Framework
+## Scenario 8: Bot Framework response
 
-Previous result: Not run.
-
-Once the required configuration is available:
+Once bot configuration is ready:
 
 1. Submit a real Bot Framework activity.
-2. Verify the bot receives the activity.
-3. Verify the message handler processes the request.
-4. Verify the bot calls the orchestrator.
-5. Verify the real LLM response returns.
-6. Verify the bot sends the final answer through the Bot Framework adapter.
+2. Verify bot activity handling.
+3. Verify orchestrator invocation.
+4. Verify knowledge retrieval.
+5. Verify real Tarvos LLM response.
+6. Verify final bot response delivery.
 
-Do not use mocked responses to claim successful integration.
+Do not claim E2E success using direct orchestrator API calls alone.
 
-## ISSUE 7: Knowledge service — 97 skipped database tests
+# 5. MICROSOFT 365 AGENTS PLAYGROUND AUTHENTICATION ISSUE
 
-Previous test result:
+Microsoft 365 Agents Playground is already installed.
+
+The Playground can reach the Docker bot endpoint, but the bot is rejecting incoming requests.
+
+Observed logs:
+
+GET /health HTTP/1.1 200 OK
+
+POST /api/messages HTTP/1.1 401 Unauthorized
+
+JWT token validation failed:
+Entra inbound token caller app is not allowed.
+
+The installed SDK version reported in the previous execution is 2.1.1.
+
+Investigate the exact SDK package and authentication implementation.
+
+## Required investigation
+
+1. Inspect requirements.txt.
+2. Identify the exact Teams SDK package and installed version inside the bot container.
+3. Inspect bot application initialization.
+4. Inspect the incoming JWT token validation logic.
+5. Identify why the Playground caller application is rejected.
+6. Determine whether Playground sends unauthenticated requests or authenticated Entra tokens in the current testing mode.
+7. Determine whether SDK 2.1.1 supports DANGEROUSLY_ALLOW_UNAUTHENTICATED_REQUESTS.
+8. Inspect how local Playground testing is configured.
+9. Identify whether the authentication failure is due to local unauthenticated testing mode or incorrect Entra configuration.
+
+Do not assume the root cause without inspecting the implementation.
+
+## Local Playground testing configuration
+
+If the installed SDK supports it, evaluate the documented local-testing option:
+
+DANGEROUSLY_ALLOW_UNAUTHENTICATED_REQUESTS=true
+
+Or its supported Python initialization equivalent.
+
+Only enable this in a separate local Playground testing configuration.
+
+Do not:
+- Enable unauthenticated requests globally.
+- Disable authentication in the production configuration.
+- Change production Entra credentials.
+- Remove token validation from the application.
+- Disable TLS verification.
+- Bypass security checks in the normal deployment.
+
+Keep separate configurations for:
+
+1. Local Playground testing.
+2. Normal authenticated bot operation.
+3. Production deployment.
+
+Use a Docker Compose override or another isolated configuration approach, after inspecting the existing setup.
+
+Verify that the normal authenticated configuration continues enforcing token validation.
+
+## Playground connectivity validation
+
+Verify whether the Playground can access the bot through the local Docker port mapping.
+
+Do not configure ngrok or Dev Tunnels.
+
+If the Playground cannot reach the local endpoint directly:
+
+- Explain the technical limitation.
+- Identify whether an approved internal HTTPS endpoint is required.
+- Stop and ask for confirmation before introducing any networking changes.
+
+# 6. KNOWLEDGE SERVICE DATABASE-DEPENDENT TESTS
+
+Previously:
 
 - 162 passed.
-- 97 skipped because a test database was not configured.
-- 5 skipped because Helm was unavailable.
+- 97 skipped because database configuration was unavailable.
+- 5 skipped because Helm was not installed.
 - 1 failed due to a .gitignore environmental check.
 
-Investigate the database-dependent tests.
+Investigate the 97 skipped tests.
 
-Requirements:
+1. Inspect test fixtures.
+2. Identify database requirements.
+3. Create a separate disposable PostgreSQL/pgvector test database.
+4. Never reset the existing E2E database.
+5. Execute the skipped tests against the isolated test database.
+6. Report actual results.
 
-1. Inspect existing test fixtures and database configuration.
-2. Identify the exact PostgreSQL/pgvector requirements.
-3. Create a separate disposable test database.
-4. Never reset or delete the existing E2E database.
-5. Run the 97 skipped tests against the isolated database.
-6. Record actual passed, failed and skipped counts.
+# 7. RESOLVE THE .gitignore TEST FAILURE
 
-## ISSUE 8: Resolve the .gitignore test failure
-
-Investigate the existing failure.
+Inspect the failing test.
 
 The previous execution suggested that Git was unavailable in the test environment.
 
-1. Inspect the exact failing test.
-2. Confirm whether Git is required.
-3. If required, install Git in the relevant test image using the appropriate package manager.
-4. Rebuild only the affected image.
-5. Rerun the failing test.
-6. Confirm the result.
+1. Confirm whether the test requires Git.
+2. If required, install Git in the relevant test image using its existing base-image package manager.
+3. Rebuild only the affected image.
+4. Rerun the test.
+5. Confirm whether the failure is resolved.
 
-Do not bypass or remove the test.
+Do not bypass the test.
 
-## ISSUE 9: Helm-related tests
+# 8. HELM TESTS
 
 Five tests were previously skipped because Helm was unavailable.
 
-Inspect whether Helm is actually required to run them.
+Inspect whether Helm is actually necessary.
 
-If required, explain the dependency and execute them if feasible.
+If appropriate, install the required test dependency in the test environment and execute the tests.
+
+Do not modify the production application image unnecessarily.
 
 Do not mark skipped tests as passed.
 
-# ISSUE 10: Investigate the observed negative-test behaviours
+# 9. INVESTIGATE EXISTING NEGATIVE TEST RESULTS
 
-Use the existing test results as the baseline.
+Previously observed:
 
-Investigate these exact observations:
-
-| Scenario | Previously observed behaviour |
+| Scenario | Result |
 |---|---|
 | Search service unreachable | HTTP 503 |
 | Invalid payload | HTTP 422 |
 | Empty retrieval | HTTP 200 with no relevant tickets |
-| Missing configuration | Clear missing-configuration error |
+| Missing configuration | Configuration error |
 | Invalid LLM key / unreachable gateway | HTTP 200 with fallback response |
 | Unknown session ID | HTTP 200 |
-| LLM gateway timeout | Not tested |
+| LLM timeout | Not tested |
 | Bad Entra credentials | Not tested |
 
-For each behaviour:
+Inspect these exact behaviours.
 
-- Inspect the actual implementation.
-- Identify the relevant exception handler.
+For each:
+- Find the implementation.
+- Identify exception handling.
 - Determine whether the behaviour is intentional.
-- Check whether fallback responses can be mistaken for genuine LLM answers.
-- Investigate unknown session handling.
-- Test an actual LLM timeout separately from gateway unavailability.
+- Explain operational implications.
+- Recommend changes only where justified.
 
-Do not change API contracts or application logic without explaining the reason and impact.
+Investigate whether fallback responses could be mistaken for actual LLM-generated responses.
 
-# FINAL ACCEPTANCE CRITERIA
+Test an actual LLM timeout separately from gateway unavailability.
 
-The objective is to achieve:
+Do not modify API contracts without explaining the impact.
 
-1. All three application containers healthy.
-2. Knowledge service working.
-3. Chat orchestrator working.
-4. Real Tarvos LLM integration working.
+# 10. SECURITY REQUIREMENTS
+
+Never print or expose:
+
+- LLM_API_KEY.
+- LLM_USE_CASE_ID values.
+- CLIENT_SECRET.
+- Database passwords.
+- Microsoft application credentials.
+- Private certificate contents.
+
+Use SET or EMPTY checks only.
+
+A previous diagnostic accidentally printed an LLM credential.
+
+Treat that key as exposed and ensure rotation is completed according to company policy.
+
+Do not include secrets in command output, logs or test reports.
+
+# 11. FINAL ACCEPTANCE CRITERIA
+
+The goal is to achieve:
+
+1. All three Docker application containers healthy.
+2. Knowledge service operational.
+3. Chat orchestrator operational.
+4. Real Tarvos LLM integration operational.
 5. Bot authentication working.
 6. Bot-to-orchestrator communication working.
 7. Orchestrator-to-knowledge communication working.
 8. Complete Bot Framework request-response working.
-9. Microsoft 365 Agents Playground test readiness.
+9. Microsoft 365 Agents Playground conversation successfully tested.
+10. Negative tests and remaining skipped tests accurately reported.
 
-# EXECUTION RULES
+# 12. EXECUTION RULES
 
-- Inspect before modifying.
-- Preserve the existing working RAG and LLM pipeline.
-- Use Docker Compose.
-- Run application services only in Docker.
-- Never print credentials.
-- Do not reset persistent data.
-- Do not use mock responses for real E2E acceptance.
-- Do not report unexecuted tests as passed.
-- Do not mark partially completed phases as completed.
+Follow this sequence:
 
-Start by inspecting the current configuration and identifying the exact missing bot prerequisites.
+Step 1: Inspect existing configuration and current container status.
 
-If any required secrets or certificate files are missing, request them from me.
+Step 2: Identify the exact missing bot authentication and certificate prerequisites.
 
-Continue independent tests wherever possible while waiting for those prerequisites.
+Step 3: Investigate Playground SDK authentication behaviour.
 
-At the end, provide a concise Phase 4 and Phase 5 execution summary with actual commands, test results, failures and remaining blockers.
+Step 4: Prepare isolated local Playground testing configuration, if supported.
+
+Step 5: Start the bot using Docker.
+
+Step 6: Complete the outstanding integration tests.
+
+Step 7: Execute the isolated database-dependent tests.
+
+Step 8: Resolve the .gitignore test failure.
+
+Step 9: Investigate the five Helm test skips.
+
+Step 10: Perform complete end-to-end testing.
+
+At each stage:
+
+- Show actual commands.
+- Show actual results.
+- Explain failures.
+- Request missing credentials rather than inventing them.
+- Preserve existing working functionality.
+- Do not expose secrets.
+- Do not use any tunnelling service.
+
+Do not generate technical documentation or PDFs in this task.
+
+First inspect the existing environment and report the exact issues before making changes.
