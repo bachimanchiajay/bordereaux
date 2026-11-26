@@ -379,6 +379,270 @@ Produce a final report containing:
 - Avoid unnecessary code refactoring.
 - Do not delete existing databases, vector indexes or uploaded documents.
 - Use Docker Compose for repeatable builds and execution.
+
+
+  # TASK: Complete Phase 4 and Phase 5 — SNOW Docker E2E Testing
+
+Act as a Senior Python Backend Engineer, Docker Engineer, QA Automation Engineer and Microsoft Bot Framework Integration Specialist.
+
+I have already completed:
+- Phase 1: Repository audit.
+- Phase 2: Docker integration setup.
+- Phase 3: Docker image builds.
+
+Phase 4 and Phase 5 are partially completed.
+
+Your task is to resolve ONLY the outstanding issues identified in the previous execution reports and complete the remaining tests.
+
+IMPORTANT:
+- All three application services must run inside Docker.
+- Do not run Python application services directly on the host.
+- Preserve the existing Docker configuration.
+- Do not delete or reset existing databases or vector data.
+- Do not modify working application logic unnecessarily.
+- Do not invent credentials or configuration.
+- Do not print secret values.
+- Use actual source code and existing configuration.
+
+# PHASE 4 — COMPLETE SERVICE STARTUP AND VALIDATION
+
+## Issue 1: Teams bot has not started
+
+Current situation:
+
+- Knowledge service is healthy.
+- Chat orchestrator is healthy.
+- PostgreSQL and pgvector are healthy.
+- Teams bot image has been built.
+- Teams bot container has not been successfully started.
+
+The following requirements are missing:
+
+1. ORCHESTRATOR_SCOPE
+2. bot-ca.pem
+
+Actions:
+
+1. Inspect the bot configuration and identify exactly where ORCHESTRATOR_SCOPE is consumed.
+2. Determine the expected value and format from the actual authentication implementation.
+3. Identify how the bot uses bot-ca.pem.
+4. Determine the expected certificate format and mount path.
+5. Verify whether the certificate is required for the current connection configuration.
+6. Identify the required Entra application registration settings and permissions.
+7. Check whether the configured credentials match the intended application registration.
+
+Do not invent ORCHESTRATOR_SCOPE.
+
+Do not generate a dummy CA certificate to bypass TLS validation.
+
+Do not disable certificate validation.
+
+Wait for me to supply the missing legitimate configuration where required.
+
+## Issue 2: Validate the complete Docker stack
+
+Once the required bot configuration is supplied:
+
+Start and validate in dependency order:
+
+1. PostgreSQL.
+2. Database initialization.
+3. snow-knowledge-service.
+4. chat-orchestrator.
+5. snow-research-teams-bot.
+
+Verify:
+
+- Container status.
+- Health checks.
+- Application startup logs.
+- Internal Docker networking.
+- Service-to-service connectivity.
+- Bot health endpoint.
+- Bot authentication configuration.
+
+Use the existing Compose configuration and actual service names.
+
+# PHASE 5 — COMPLETE OUTSTANDING INTEGRATION TESTS
+
+The previous report shows these results:
+
+| Scenario | Existing result |
+|---|---|
+| 1. All three services start | Partial: bot not started |
+| 2. Bot endpoint responds | Not run |
+| 3. Bot calls orchestrator | Partially run |
+| 4–7. Orchestrator → Knowledge → Retrieval → LLM | Passed |
+| 8. Bot returns answer via Bot Framework | Not run |
+
+Do not unnecessarily repeat already-passed tests unless a dependency change requires regression testing.
+
+## Issue 3: Complete Scenario 2 — Bot endpoint
+
+After the bot starts:
+
+- Test the actual bot health endpoint.
+- Verify the expected HTTP status.
+- Check the bot container logs.
+- Verify the endpoint is listening on the expected container port.
+- Distinguish health endpoint success from authenticated Bot Framework messaging success.
+
+## Issue 4: Complete Scenario 3 — Bot calls orchestrator
+
+The previous report says the bot's own client code, executed inside the bot image, received a real answer and five source tickets from the live orchestrator.
+
+However, Entra authentication and the actual bot messaging flow were not exercised.
+
+Now:
+
+1. Verify the actual bot-to-orchestrator authentication.
+2. Verify ORCHESTRATOR_SCOPE.
+3. Execute the existing bot client integration test.
+4. Verify the real orchestrator response.
+5. Verify source ticket handling.
+6. Capture actual request and response status without exposing credentials.
+
+## Issue 5: Complete Scenario 8 — Bot Framework response
+
+Once bot authentication and messaging prerequisites are available:
+
+1. Submit an actual Bot Framework activity.
+2. Verify activity handling.
+3. Verify the bot invokes the orchestrator.
+4. Verify the orchestrator response reaches the bot.
+5. Verify the final response is sent through the Bot Framework adapter.
+
+Do not mark this scenario as passed using a mocked response or direct orchestrator API call.
+
+# ISSUE 6 — KNOWLEDGE SERVICE TEST SUITE
+
+Previous test results:
+
+- 162 passed.
+- 5 skipped because Helm is not installed.
+- 1 failed due to the .gitignore environmental check.
+- 97 skipped because no database was configured for those tests.
+
+The previous execution proposed using a separate disposable PostgreSQL/pgvector database rather than the real E2E database.
+
+Implement this carefully.
+
+### Database-dependent tests
+
+1. Inspect the existing test fixtures and database configuration.
+2. Create a separate disposable pgvector test database/container.
+3. Do not connect these tests to the existing production-like E2E database.
+4. Do not reset the existing database.
+5. Run the 97 database-dependent tests against the isolated test database.
+6. Report passed, failed and skipped counts.
+
+### .gitignore test failure
+
+The previous report identified the missing Git executable as an environmental cause.
+
+1. Inspect the failing test.
+2. Confirm whether it requires Git.
+3. If required, add Git to the relevant test image using the appropriate base-image package manager.
+4. Rebuild only the affected image.
+5. Rerun the test.
+6. Confirm the exact failure is resolved.
+
+Do not modify the test merely to bypass the check.
+
+### Helm tests
+
+The five Helm-related tests were skipped because Helm was not installed.
+
+Inspect their requirements and report whether Helm installation is necessary to execute them.
+
+Do not mark skipped tests as passed.
+
+# ISSUE 7 — INVESTIGATE THE EXISTING NEGATIVE TEST RESULTS
+
+The previous execution reported the following actual behaviours.
+
+| Scenario | Observed behaviour |
+|---|---|
+| Search service unreachable | HTTP 503 RAG Service Unavailable |
+| Invalid payloads | HTTP 422 |
+| Empty retrieval | HTTP 200 with no relevant tickets |
+| Missing configuration | Service reports missing configuration |
+| Invalid LLM key / unreachable LLM / missing key and use-case ID | HTTP 200 with fallback response |
+| Unknown session_id | HTTP 200 instead of an error |
+| LLM gateway timeout | Not run; unreachable gateway was tested instead |
+| Bad Entra credentials | Not run because bot was not started |
+
+Investigate these exact behaviours.
+
+For each:
+
+1. Locate the relevant implementation.
+2. Identify the exception-handling logic.
+3. Determine whether the response is intentional.
+4. Identify whether the behaviour creates an operational or debugging issue.
+5. Recommend a correction only when justified by the implementation.
+
+Pay special attention to:
+
+- Fallback responses being returned with HTTP 200.
+- Whether fallback responses can be mistaken for genuine LLM-generated answers.
+- Unknown session ID handling.
+- Actual timeout handling versus an unreachable gateway.
+
+Do not change API contracts or production behaviour without explaining the impact and obtaining approval.
+
+# FINAL VALIDATION REPORT
+
+Produce a consolidated Phase 4 and Phase 5 report.
+
+Include:
+
+1. Issues identified.
+2. Root cause of each issue.
+3. Files modified.
+4. Docker images rebuilt.
+5. Containers started.
+6. Exact commands executed.
+7. Tests passed.
+8. Tests failed.
+9. Tests skipped.
+10. Remaining dependencies.
+11. Actual end-to-end status.
+
+Use this execution matrix:
+
+| Scenario | Previous status | Current status | Evidence |
+|---|---|---|---|
+
+Only mark a test passed when it actually executes successfully.
+
+# DOCUMENTATION UPDATE
+
+Update the existing files:
+
+SNOW_Research_AI_Agent_Technical_Guide.md
+
+SNOW_Research_AI_Agent_Technical_Guide.pdf
+
+Record the actual Phase 4 and Phase 5 implementation, testing commands, results and outstanding issues.
+
+Do not generate a new generic document.
+
+Preserve the previous phase history.
+
+# EXECUTION RULE
+
+First inspect the current configuration and identify the exact missing bot prerequisites.
+
+If credentials or certificate files are missing, stop and request them from me.
+
+Continue with independent knowledge service and orchestrator tests wherever possible.
+
+Do not block unrelated tests unnecessarily.
+
+Do not use mocks to claim that the real Bot Framework integration passed.
+
+Proceed step by step and provide evidence for every completed item.
 - Report actual results, not assumptions.
 
 Work phase by phase and respect the STOP condition after Phase 1.
