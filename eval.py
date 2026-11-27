@@ -1,457 +1,398 @@
+# ROLE: Principal AI Architect, Senior AI Engineer, Production Software Architect & Expert Prompt Engineer
 
-Create a detailed enterprise-level component architecture diagram for the SNOW Research AI Agent, inspired by the component architecture reference image provided by me.
+Act as a Principal AI Architect and Senior Software Engineer with expertise in production-grade AI applications, LLM orchestration, prompt engineering, scalable backend services, clean architecture, and enterprise software engineering.
 
-The purpose of this diagram is to help:
+Your responsibility is to analyze and improve the existing AI conversation service.
 
-- Deployment engineers understand what components need to be deployed.
-- Infrastructure teams understand service dependencies.
-- Architects understand who calls whom.
-- Developers understand the request and response flow.
-- Support engineers identify where failures occur.
-- Security teams understand service communication boundaries.
-- Operations teams understand which databases, volumes and external services are required.
+The objective is to make the service:
+
+- Dynamically configurable.
+- Production-ready.
+- Context-aware.
+- Strictly isolated across conversations.
+- Intelligent in understanding ambiguous and direct questions.
+- Scalable and maintainable.
+- Efficient in processing and resource utilization.
+- Compatible with the existing architecture and functionality.
+
+IMPORTANT: Do not blindly modify the code. First understand the existing implementation, identify architectural gaps, and then implement the smallest appropriate changes.
+
+# 1. UNDERSTAND THE EXISTING ARCHITECTURE
+
+Before writing or modifying code:
+
+1. Inspect the complete relevant codebase.
+2. Identify the current service architecture and responsibilities.
+3. Understand the existing system prompt and dynamic prompt construction.
+4. Identify how LLM requests and responses are processed.
+5. Understand conversation ID, session ID, and message-history management.
+6. Identify existing follow-up-question detection and clarification mechanisms.
+7. Understand how conversation history is retrieved and passed to the LLM.
+8. Identify existing configurations, environment variables, logging, error handling, and tests.
+9. Identify potential performance bottlenecks and tightly coupled components.
+
+Do not assume the framework, database, LLM provider, or deployment environment. Discover these from the source code.
+
+Before implementation, provide a short architectural assessment and an implementation plan.
+
+# 2. STRICT CONVERSATION CONTEXT ISOLATION
+
+The application supports multiple independent conversations.
+
+Each conversation must maintain its own independent context.
+
+Requirements:
+
+- Retrieve conversation history using the correct conversation identifier.
+- Never mix messages from different conversations.
+- Follow-up questions must use only the current conversation history.
+- A new conversation must start without inheriting unrelated previous conversation history.
+- Never use global conversation history as a substitute for conversation-specific history.
+- Prevent accidental context sharing across concurrent requests.
+- Ensure that conversation history is correctly associated with the authenticated user and appropriate conversation.
+- Validate conversation ownership and authorization where applicable.
+
+Example:
+
+Conversation A:
+User: Explain email marketing.
+Assistant: Explains email marketing.
+User: What are its advantages?
+
+Expected: Understand that "its" refers to email marketing.
+
+Conversation B:
+User: Explain Kubernetes.
+
+Expected: Answer about Kubernetes without using any information from Conversation A.
 
 IMPORTANT:
+Conversation isolation must be enforced at the application and data-access layers. Prompt instructions alone are insufficient.
 
-Use the actual implementation from all three repositories.
+# 3. INTELLIGENT QUESTION UNDERSTANDING
 
-Do not copy component names from the reference diagram unless those components actually exist in my source code.
+Improve the existing system prompt to distinguish between direct, generic, ambiguous, and contextual follow-up questions.
 
-Do not invent workers, schedulers, queues, registries, storage services, APIs or databases.
+## A. Direct questions
 
-If a component does not exist, do not include it as an implemented component.
-
-## A. Create a detailed four-column component architecture diagram
-
-Organize the main architecture into four logical columns, following the reference image.
-
-### COLUMN 1 — INGESTION AND DOCUMENT PROCESSING PIPELINE
-
-Inspect snow-knowledge-service and identify every implemented component involved in document ingestion.
-
-Investigate:
-
-- Document upload endpoint.
-- Ingestion API.
-- Ingestion orchestrator.
-- Background processing.
-- Document extraction.
-- PDF processing.
-- OCR, if implemented.
-- Text normalization.
-- Document parsing.
-- Chunking.
-- Metadata extraction.
-- Embedding generation.
-- Vector insertion.
-- Database persistence.
-- Ingestion status updates.
-- Error handling.
-
-Include actual components, classes, functions and workers only when they exist.
-
-For every connection, show:
-
-- Calling component.
-- Receiving component.
-- API endpoint or function.
-- Data passed.
-- Processing performed.
-- Output produced.
-
-Example flow to investigate, not assume:
-
-Document Upload
-→ Ingestion API
-→ Document Processing
-→ Text Extraction
-→ Chunking
-→ Embedding Generation
-→ Vector Database.
-
-If ingestion is asynchronous, explicitly show the actual queue, background task or worker implementation.
-
-If ingestion is synchronous, represent it as synchronous processing.
-
-### COLUMN 2 — DATA SOURCES AND SOURCE OF TRUTH
-
-Identify the actual data sources used by the application.
-
-Inspect:
-
-- Uploaded documents.
-- ServiceNow integration.
-- External data sources.
-- Existing relational databases.
-- Document metadata.
-- Configuration and client information, if implemented.
-- Document storage.
-- Any source-of-truth systems.
-
-Identify which component owns each data source.
-
-Explain:
-
-- Who writes data.
-- Who reads data.
-- Which service owns the connection.
-- Whether data is stored locally, in a database or in an external system.
-- Whether synchronization is implemented.
-- Whether source data is copied, transformed or referenced.
-
-Clearly distinguish actual integrated systems from proposed future integrations.
-
-Do not assume a client portal, document registry or synchronization scheduler exists.
-
-### COLUMN 3 — SHARED STORES AND SERVICES
-
-Identify all shared data stores, infrastructure dependencies and AI services used by the three applications.
-
-Investigate:
-
-- PostgreSQL.
-- pgvector extension.
-- Vector tables.
-- Document/chunk tables.
-- Metadata tables.
-- Conversation/session storage.
-- Uploaded document storage.
-- Persistent Docker volumes.
-- Embedding model.
-- Embedding generation service.
-- LLM gateway.
-- AI model endpoints.
-- SQL Server, if used.
-- Other external services actually configured.
-
-For each storage component document:
-
-1. Name.
-2. Purpose.
-3. Owning service.
-4. Container or external resource.
-5. Database/schema/table, where applicable.
-6. Data stored.
-7. Read operations.
-8. Write operations.
-9. Persistence mechanism.
-10. Backup or retention mechanism, if implemented.
-
-Show which services access each shared resource.
-
-For example, if supported by actual code:
-
-Knowledge Service → PostgreSQL/pgvector → Vector Records.
-
-Orchestrator → Knowledge Service → Retrieval Results.
-
-Make it clear whether access occurs through HTTP APIs or direct database connections.
-
-Do not portray a resource as shared when the applications actually access it independently.
-
-### COLUMN 4 — QUERY AND CHAT PIPELINE
-
-Inspect the complete request and response flow across:
-
-- Microsoft 365 Agents Playground.
-- Microsoft Teams.
-- Bot Framework integration.
-- snow-research-teams-bot.
-- chat-orchestrator.
-- snow-knowledge-service.
-- Embedding generation.
-- Dense retrieval.
-- BM25 retrieval, if implemented.
-- Hybrid retrieval.
-- Reciprocal Rank Fusion, if implemented.
-- Cross-encoder reranking.
-- Context construction.
-- LLM gateway.
-- Final response generation.
-- Bot response delivery.
-
-Show exactly which component calls each API.
-
-Include the actual route names and HTTP methods.
-
-Example structure to verify against the code:
-
-Microsoft 365 Agents Playground
-→ Teams Bot Messaging Endpoint
-→ Bot Message Handler
-→ Orchestrator Client
-→ Chat API
-→ Knowledge Search API
-→ Retrieval Pipeline
-→ Vector Database
-→ Context Construction
-→ Tarvos LLM Gateway
-→ Response Generation
-→ Orchestrator Response
-→ Teams Bot
-→ User.
-
-Do not assume that the example request ordering or endpoints are correct. Trace the actual implementation.
-
-## B. Show exactly WHO CALLS WHOM
-
-This is the most important requirement.
-
-Every connection between two components must contain a meaningful label.
+When the question is clear and sufficiently specific, answer directly.
 
 Examples:
 
-- POST /api/messages
-- POST /api/sessions/create
-- POST /snow/chat
-- POST /v1/search
-- HTTP GET health check
-- Upload document
-- Extract text
-- Generate embedding
-- Insert vector
-- Search vectors
-- Retrieve document metadata
-- Send prompt + context
-- Receive LLM response
-- Return bot activity
-
-Use the actual API paths and methods from the source code.
+- What is RAG?
+- Explain transformer architecture.
+- How does Microsoft Outlook work?
+- What is the difference between Gmail and Outlook?
 
-Where communication occurs through internal Python function calls rather than HTTP, label it accordingly.
+Do not ask unnecessary clarification questions.
 
-Where a database operation occurs, identify the actual table or operation if available.
+## B. Generic or ambiguous questions
 
-Avoid generic arrow labels such as "connects to" when the exact operation can be determined.
+When essential information is missing, ask one relevant clarification question.
 
-## C. Add component ownership and deployment mapping
+Examples:
 
-For every component in the architecture, identify:
+User: Explain email marketing.
 
-| Field | Description |
-|---|---|
-| Component | Actual component name |
-| Repository | Which of the three services owns it |
-| Module/File | Actual source file |
-| Class/Function | Main implementation |
-| Docker service | Compose service name |
-| Container | Actual container name, if confirmed |
-| Image | Docker image |
-| Port | Actual exposed/listening port |
-| Protocol | HTTP, HTTPS, database or internal call |
-| Dependencies | Required upstream components |
-| Storage | Data resources used |
-| Configuration | Required environment variables |
-| Health check | Actual health endpoint or check |
-
-Do not guess container names or ports.
-
-This mapping must help the deployment team understand exactly what needs to be deployed.
-
-## D. Create an inter-service communication matrix
-
-Produce a detailed table:
-
-| Caller | Receiver | Protocol | API/Function | Purpose | Authentication | Expected result |
+Expected:
+"Are you interested in email marketing using Outlook, Gmail, or a dedicated email marketing platform?"
 
-Include every relevant communication relationship.
+User: Explain deployment.
 
-Distinguish:
+Expected:
+Ask whether the user means Docker, Kubernetes, cloud deployment, or another deployment environment, if that distinction is necessary to answer correctly.
 
-- External to internal communication.
-- Bot to orchestrator.
-- Orchestrator to knowledge service.
-- Knowledge service to PostgreSQL.
-- Knowledge service to embedding model.
-- Orchestrator to LLM gateway.
-- Bot/orchestrator to feedback storage, if implemented.
-- Ingestion service to external sources, if implemented.
+User: Help me configure email.
 
-Use actual authentication and authorization details from the implementation.
+Expected:
+Ask which email service or platform they are using.
 
-Do not expose credentials.
+Do not assume missing information.
 
-## E. Create a detailed runtime sequence diagram
+Do not ask clarification questions merely because multiple answers are possible. Ask only when the missing context materially changes the answer.
 
-Create a Mermaid sequence diagram for a real user question.
+## C. Follow-up questions
 
-Show the execution sequence:
+The existing follow-up-question functionality is already implemented.
 
-1. User submits a question in Agents Playground.
-2. Bot receives the activity.
-3. Bot processes the incoming message.
-4. Bot invokes the orchestrator.
-5. Orchestrator processes the chat request.
-6. Orchestrator invokes knowledge retrieval.
-7. Knowledge service processes the search.
-8. Relevant vectors and document content are retrieved.
-9. Retrieval results return to the orchestrator.
-10. Orchestrator constructs the LLM prompt.
-11. Orchestrator calls Tarvos LLM Gateway.
-12. LLM produces an answer.
-13. Orchestrator returns the answer.
-14. Bot prepares the response.
-15. Bot sends the response through Bot Framework.
-16. User receives the answer.
+Preserve and reuse it.
 
-Include actual APIs, function calls and response transitions.
+Examples:
 
-Only include steps supported by source code.
+User: Explain RAG.
+Assistant: Explains RAG.
+User: What are its limitations?
 
-## F. Create a separate document ingestion sequence diagram
+Expected:
+Resolve "its" using the current conversation.
 
-Show:
+Another example:
 
-1. Document upload.
-2. API validation.
-3. Extraction.
-4. Text processing.
-5. Chunking.
-6. Metadata generation.
-7. Embedding generation.
-8. Database insertion.
-9. Persistence.
-10. Ingestion status response.
+User: Explain email marketing.
+Assistant: Which platform are you interested in?
+User: Outlook.
 
-Identify which service executes each stage.
+Expected:
+Continue answering the original question using Outlook as the clarified context.
 
-Identify whether operations are synchronous or asynchronous.
+Do not create a duplicate follow-up mechanism.
 
-Include actual API endpoints and relevant database writes.
+# 4. DYNAMIC SERVICE DESIGN
 
-## G. Create an actual Docker deployment topology diagram
+The service must be dynamic rather than dependent on hardcoded business logic.
 
-Create a separate infrastructure-level diagram showing:
+Requirements:
 
-- Docker Compose project.
-- Shared Docker network.
-- PostgreSQL/pgvector container.
-- Database initialization container.
-- Knowledge service container.
-- Orchestrator container.
-- Teams bot container.
-- Persistent Docker volumes.
-- Host-to-container port mappings.
-- Internal container-to-container connections.
-- External Tarvos LLM Gateway connectivity.
-- Other actual external dependencies.
+- Keep prompt instructions configurable and maintainable.
+- Support dynamic prompt construction based on the current request and relevant conversation context.
+- Avoid hardcoding specific examples, platforms, or domains into business logic.
+- Separate prompt templates, configuration, context management, and LLM invocation.
+- Make it possible to update prompt instructions without rewriting unrelated service components.
+- Use the existing configuration management mechanism wherever possible.
+- Support future extension to additional LLM providers and use cases without unnecessary architectural changes.
+- Ensure configuration validation and sensible defaults.
+- Avoid unnecessary database calls and repeated prompt construction.
+- Do not introduce additional LLM calls unless there is a measurable architectural requirement.
 
-Show:
+The implementation must be generic and reusable across different business domains.
 
-- Service name.
-- Image name.
-- Container port.
-- Host port.
-- Health check.
-- Startup dependencies.
-- Persistent storage.
+# 5. SOLID PRINCIPLES AND CLEAN SOFTWARE DESIGN
 
-Use actual Docker Compose configuration.
+Follow all five SOLID principles.
 
-Do not include any tunnel infrastructure.
+## Single Responsibility Principle (SRP)
+Each class and module should have one clear responsibility.
 
-Clearly distinguish internal Docker networking from externally accessible endpoints.
+Examples:
+- Prompt management.
+- Conversation context management.
+- Question understanding.
+- LLM invocation.
+- Configuration management.
+- Response processing.
 
-## H. Add deployment dependency ordering
+Do not combine unrelated responsibilities into a single large class or function.
 
-Create an explicit dependency diagram or table showing the safe deployment sequence.
+## Open/Closed Principle (OCP)
+The service should be extendable without repeatedly modifying existing core logic.
 
-Investigate:
+Use appropriate abstractions and interfaces consistent with the existing codebase.
 
-- Which infrastructure containers must start first.
-- Which database initialization must finish first.
-- When the knowledge service can become healthy.
-- When the orchestrator can start.
-- When the bot can start.
-- Which external dependencies are required at runtime.
-
-Use actual Compose health checks and dependency conditions.
-
-Do not assume `depends_on` alone guarantees application readiness.
-
-Explain the actual readiness mechanism.
-
-## I. Add failure propagation and troubleshooting paths
-
-Identify the impact when each component is unavailable.
-
-Examples to investigate:
-
-- PostgreSQL unavailable.
-- Knowledge service unavailable.
-- Embedding service unavailable.
-- Vector retrieval fails.
-- Orchestrator unavailable.
-- Tarvos gateway timeout.
-- Bot authentication failure.
-- Bot-to-orchestrator communication failure.
-
-Create a troubleshooting matrix:
-
-| Failed component | Observable symptom | Affected downstream components | Logs to inspect | Diagnostic command |
-
-Use actual container names and logs.
-
-## J. Diagram formatting
-
-All architecture diagrams must follow the reference style:
-
-- Horizontal, left-to-right logical grouping.
-- Clearly defined component boxes.
-- Consistent colors per logical layer.
-- Labelled directional arrows.
-- Actual component names.
-- Actual API and data operation labels.
-- Clear separation of services and shared resources.
-- Deployment boundaries.
-- Readable text.
-- Minimal crossing arrows.
-
-Use these logical color groups:
-
-- Blue: ingestion and processing.
-- Orange: source systems.
-- Green: databases, shared resources and infrastructure.
-- Purple: query, chat and LLM processing.
-- Grey: Docker runtime and deployment boundaries.
-
-The diagrams must be readable in both Markdown and PDF.
-
-If a single diagram becomes overcrowded, create multiple related diagrams instead of reducing text size.
-
-## K. Required architecture deliverables
-
-Add these diagrams to the final technical guide:
-
-1. High-level system architecture.
-2. Detailed four-column component interaction architecture.
-3. Document ingestion pipeline.
-4. Data storage and ownership architecture.
-5. Query and chat component architecture.
-6. User question sequence diagram.
-7. Document ingestion sequence diagram.
-8. Docker deployment topology.
-9. Inter-service dependency architecture.
-10. Failure propagation architecture.
-
-Retain the Mermaid source code for every diagram in the Markdown document.
-
-## L. Final architecture quality validation
-
-Before generating the final PDF:
-
-- Validate every component against the source code.
-- Validate all API paths.
-- Validate caller and receiver direction.
-- Validate communication protocols.
-- Validate database ownership.
-- Validate Docker service names.
-- Validate port mappings.
-- Validate volumes.
-- Validate environment dependencies.
-- Validate component dependencies.
-- Ensure there are no invented components.
-- Ensure there are no invented API calls.
-- Ensure actual versus recommended components are clearly distinguished.
-
-The primary outcome must be an architecture document that an infrastructure/deployment engineer can use to understand exactly what to deploy, where each component runs, what it communicates with, what it depends on, and how the complete request and data flows through the application.
+## Liskov Substitution Principle (LSP)
+Implement abstractions so that alternative implementations can be substituted without breaking expected behavior.
+
+## Interface Segregation Principle (ISP)
+Keep interfaces focused. Avoid forcing components to depend on methods they do not require.
+
+## Dependency Inversion Principle (DIP)
+High-level business logic should depend on abstractions rather than tightly coupled concrete implementations.
+
+Use dependency injection where appropriate and consistent with the existing framework.
+
+Additional engineering practices:
+
+- Clean architecture.
+- Separation of concerns.
+- DRY.
+- KISS.
+- Explicit type hints.
+- Meaningful naming conventions.
+- Small, testable functions.
+- Reusable components.
+- Appropriate error handling.
+- Maintainable configuration.
+
+Avoid unnecessary abstractions and overengineering.
+
+# 6. PERFORMANCE AND ALGORITHM EFFICIENCY
+
+This is a strict engineering requirement.
+
+Do not introduce unnecessary nested loops.
+
+Specifically:
+
+- Avoid nested iterations over conversations, messages, prompts, or context collections.
+- Avoid O(n²) algorithms when a dictionary, set, indexing strategy, or single-pass approach can solve the problem more efficiently.
+- Prefer single-pass processing where practical.
+- Use efficient data structures for conversation and message lookup.
+- Avoid repeated scanning of the same conversation history.
+- Avoid duplicate retrieval and unnecessary transformations.
+- Avoid repeated LLM calls for the same logical operation.
+- Avoid unnecessary serialization and deserialization.
+- Use batching where it improves throughput and is compatible with existing behavior.
+- Consider asynchronous processing for I/O-bound operations where appropriate.
+- Avoid blocking operations in asynchronous request handlers.
+
+Do not sacrifice readability or correctness merely to eliminate a loop.
+
+For performance-sensitive logic, document the time and space complexity where useful.
+
+# 7. PRODUCTION-READINESS REQUIREMENTS
+
+Implement according to production software engineering standards.
+
+## Reliability
+- Handle LLM provider failures.
+- Handle timeouts.
+- Handle invalid or missing conversation identifiers.
+- Handle empty conversation history.
+- Handle malformed requests and unexpected responses.
+- Implement controlled retries only for transient failures.
+- Avoid retry storms and duplicate request processing.
+
+## Security
+- Validate and sanitize inputs appropriately.
+- Enforce conversation ownership and authorization.
+- Do not expose internal prompts, credentials, or sensitive context.
+- Never log secrets, access tokens, or unnecessary personal data.
+- Protect against prompt injection from untrusted user-provided content.
+- Treat retrieved conversation content as data, not as trusted system instructions.
+
+## Observability
+- Use structured logging.
+- Include correlation/request IDs.
+- Capture relevant latency and failure metrics.
+- Monitor LLM invocation failures and response times.
+- Track clarification behavior without exposing sensitive conversation content.
+
+## Scalability
+- Avoid unnecessary shared mutable state.
+- Ensure concurrent requests cannot contaminate each other's context.
+- Support horizontal scaling according to the existing architecture.
+- Avoid unnecessary in-memory session dependencies.
+- Respect existing connection-pooling and resource-management patterns.
+
+## Maintainability
+- Centralize configuration.
+- Avoid magic values.
+- Document important architectural decisions.
+- Keep functions small and responsibilities clear.
+- Follow existing repository conventions.
+
+# 8. TESTING REQUIREMENTS
+
+Create or update automated tests using the existing testing framework.
+
+Test the following scenarios:
+
+1. Direct question receives a direct answer.
+2. Generic email marketing question triggers clarification.
+3. Specific Outlook question receives a direct answer.
+4. Clarification response is correctly incorporated.
+5. Existing follow-up functionality continues working.
+6. Pronoun-based follow-up resolves from current conversation.
+7. Two conversations remain completely isolated.
+8. New conversation starts with fresh context.
+9. Concurrent requests do not mix conversation histories.
+10. Invalid conversation identifiers are handled safely.
+11. Empty conversation history is handled correctly.
+12. LLM timeout and provider errors are handled.
+13. Prompt configuration can be changed without modifying business logic.
+14. Existing API contracts remain unchanged.
+15. Performance-sensitive operations do not introduce unnecessary nested traversal.
+
+Use mocked LLM responses for deterministic unit tests.
+
+Add integration tests where appropriate.
+
+Do not claim tests passed unless they were actually executed.
+
+# 9. IMPLEMENTATION CONSTRAINTS
+
+Strictly follow these constraints:
+
+- Do not rewrite the entire application.
+- Do not replace existing working functionality without justification.
+- Do not duplicate follow-up-question logic.
+- Do not introduce unnecessary agents or classifiers.
+- Do not add unnecessary LLM calls.
+- Do not hardcode platform-specific or domain-specific assumptions.
+- Do not introduce unnecessary dependencies.
+- Do not use global mutable variables for conversation context.
+- Do not create unnecessary nested loops.
+- Do not break existing API contracts.
+- Do not change unrelated modules.
+- Do not invent configuration settings or infrastructure that does not exist.
+- Do not make unsupported assumptions about the production environment.
+
+Prefer minimal, incremental, backward-compatible changes.
+
+# 10. REQUIRED EXECUTION WORKFLOW
+
+Follow this sequence:
+
+Phase 1: Codebase Analysis
+- Inspect the existing implementation.
+- Map the request-to-LLM execution flow.
+- Identify prompt and context-management components.
+- Identify existing follow-up logic.
+- Identify architectural and performance gaps.
+
+Phase 2: Design
+- Propose the smallest appropriate architectural improvements.
+- Identify the modules that require modification.
+- Explain how SOLID principles will be applied.
+- Explain how conversation isolation will be enforced.
+- Explain how dynamic prompt management will work.
+
+Phase 3: Implementation
+- Implement the changes incrementally.
+- Reuse existing components.
+- Maintain backward compatibility.
+- Follow the repository's coding standards.
+- Avoid unnecessary nested loops and repeated processing.
+
+Phase 4: Validation
+- Execute relevant unit tests.
+- Execute integration tests where available.
+- Run linting and type checks if configured.
+- Validate existing functionality.
+- Verify conversation isolation.
+- Review performance and complexity.
+
+Phase 5: Final Review
+- Review all modified files.
+- Check for duplicated logic.
+- Check for unnecessary abstractions.
+- Check for security and concurrency issues.
+- Confirm no unrelated changes were introduced.
+
+# 11. FINAL DELIVERABLES
+
+Provide:
+
+1. Existing architecture overview.
+2. Identified problems and root causes.
+3. Proposed architecture and design decisions.
+4. Updated system prompt.
+5. Files modified and their responsibilities.
+6. Explanation of SOLID principles applied.
+7. Explanation of dynamic service implementation.
+8. Explanation of conversation isolation.
+9. Explanation of performance improvements and algorithm complexity.
+10. Test execution results.
+11. Production-readiness gaps, if any.
+12. Remaining limitations and recommendations.
+
+# FINAL ACCEPTANCE CRITERIA
+
+The implementation is acceptable only when:
+
+- Multiple conversations operate independently.
+- Follow-up questions work using the correct conversation context.
+- Generic questions trigger intelligent clarification when necessary.
+- Direct questions are answered without unnecessary clarification.
+- Existing follow-up functionality remains intact.
+- Prompt construction is dynamic and maintainable.
+- The architecture follows SOLID principles.
+- Unnecessary nested loops and inefficient repeated processing are avoided.
+- Concurrent requests cannot leak conversation context.
+- Error handling, logging, configuration, and testing meet production expectations.
+- Existing APIs and functionality remain backward compatible.
+
+Most importantly:
+
+Think and work like a Principal AI Architect building an enterprise production service, not like someone making a quick prompt modification.
+
+Understand first. Design second. Implement third. Test thoroughly. Never fabricate implementation details or test results.
